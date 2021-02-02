@@ -242,18 +242,14 @@ int dtls_connect(struct dtls_ctx *ctx, const char *address, int port)
   SSL_CTX_set_ciphersuites(ctx->ssl_ctx, "TLS_PSK_WITH_AES_128_GCM_SHA256");
 #endif
 
-#ifdef __APPLE__
   SSL_CTX_set_options(ctx->ssl_ctx, SSL_OP_NO_QUERY_MTU);
-#endif
 
   ctx->ssl = SSL_new(ctx->ssl_ctx);
 
   /* Save a reference to the dtls ctx struct so callback can access it */
   SSL_set_ex_data(ctx->ssl, dtls_ctx_index, ctx);
 
-#ifdef __APPLE__
   SSL_set_mtu(ctx->ssl, MAX_PAYLOAD_SIZE);
-#endif
 
   /* Create BIO, connect and set to already connected */
   ctx->bio = BIO_new_dgram(ctx->fd, BIO_CLOSE);
