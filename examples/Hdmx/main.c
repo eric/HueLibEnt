@@ -84,7 +84,7 @@ void sendPollReply(struct sockaddr_in *sender,int artnetSock)
     struct ifaddrs * ifa = NULL;
     for (ifa = ifAddrStruct; ifa != NULL; ifa = ifa->ifa_next)
 	{
-	if (ifa->ifa_addr->sa_family == AF_INET)
+	if (ifa->ifa_addr != NULL && ifa->ifa_addr->sa_family == AF_INET)
 		{
 		struct in_addr addr;
 		addr=((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
